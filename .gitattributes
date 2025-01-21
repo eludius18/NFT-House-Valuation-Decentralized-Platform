@@ -1,0 +1,3 @@
+machine_learning/venv/** filter=lfs diff=lfs merge=lfs -text
+machine_learning/*.keras filter=lfs diff=lfs merge=lfs -text
+machine_learning/*.save filter=lfs diff=lfs merge=lfs -text

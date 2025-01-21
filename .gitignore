@@ -1,0 +1,51 @@
+# General
+.DS_Store
+Thumbs.db
+.env
+*.env
+*.log
+*.bak
+*.lock
+*.tmp
+*.temp
+
+# Node.js / Hardhat (blockchain folder)
+blockchain/node_modules/
+blockchain/artifacts/
+blockchain/cache/
+blockchain/.env
+blockchain/tsconfig.json
+blockchain/.tsbuildinfo
+blockchain/coverage/
+blockchain/*.log
+
+# Machine Learning (Python API)
+machine_learning/__pycache__/
+machine_learning/.env
+machine_learning/.ipynb_checkpoints
+machine_learning/*.log
+machine_learning/venv/
+machine_learning/*.keras
+machine_learning/*.save
+
+# Rust (rust_backend folder)
+rust_backend/target/
+rust_backend/Cargo.lock
+rust_backend/.env
+rust_backend/*.log
+!rust_backend/abi/
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+.Trashes
+
+# Docker
+*.pid
+docker-compose.override.yml
