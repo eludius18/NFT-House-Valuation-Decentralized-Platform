@@ -8,6 +8,7 @@ This repository demonstrates how to create a decentralized platform for minting 
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Commands](#commands)
@@ -41,7 +42,9 @@ Before starting, ensure you have the following installed on your system:
   sudo apt install nodejs npm
   ```
 - **MetaMask Wallet** with some ETH on the Goerli testnet.
-- **Infura Account** for Ethereum RPC access.
+- **Alchemy or Infura Account** for Ethereum RPC access.
+
+---
 
 ## Installation
 
@@ -51,46 +54,86 @@ git clone https://github.com/eludius18/nft-house-valuation-platform.git
 cd nft-house-valuation-platform
 ```
 
-### 2. Set Up the Python Model
-```bash
-cd python_model
-pip install flask tensorflow joblib pandas
-```
-Place your pre-trained model (`house_price_model.keras`) and scaler (`scaler.save`) in the `python_model/` directory.
+### 2. Set Up Environment Variables
+This project requires `.env` files for sensitive configurations in the `blockchain` and `rust_backend` directories. Example `.env` files are provided. To set them up:
 
-### 3. Set Up the Rust Backend
+1. **Copy the example `.env` files**:
+   ```bash
+   cp blockchain/.env.example blockchain/.env
+   cp rust_backend/.env.example rust_backend/.env
+   ```
+
+2. **Fill in the `.env` files**:
+   Open each `.env` file and replace `<PLACEHOLDER>` values with the correct credentials.
+
+   #### **`blockchain/.env`**
+   ```env
+   ALCHEMY_API_KEY=<your_alchemy_api_key>
+   CHAIN_ID=31337
+   PRIVATE_KEY=<your_private_key>
+   ```
+
+   #### **`rust_backend/.env`**
+   ```env
+   ALCHEMY_URL=http://127.0.0.1:8545
+   CHAIN_ID=31337
+   PRIVATE_KEY=<your_private_key>
+   CONTRACT_ADDRESS=<deployed_contract_address>
+   ```
+
+3. **Do not commit `.env` files to version control**:
+   These files are included in `.gitignore` to prevent accidental exposure of sensitive information.
+
+### 3. Set Up the Python Model
+```bash
+cd machine_learning
+pip install -r requirements.txt
+```
+Place your pre-trained model (`house_price_model.keras`) and scaler (`scaler.save`) in the `machine_learning/` directory.
+
+### 4. Set Up the Rust Backend
 ```bash
 cd ../rust_backend
 cargo build
 ```
-Create a `.env` file in the `rust_backend/` directory with the following variables:
-```env
-INFURA_URL=https://goerli.infura.io/v3/<your_infura_project_id>
-PRIVATE_KEY=<your_wallet_private_key>
-CONTRACT_ADDRESS=<deployed_contract_address>
-```
 
-### 4. Set Up Hardhat
+### 5. Set Up Hardhat
 ```bash
-cd ../hardhat
+cd ../blockchain
 npm install --save-dev @openzeppelin/contracts @nomiclabs/hardhat-ethers ethers
 ```
+
+If you want to fork the Ethereum mainnet using Alchemy, follow these steps:
+
+1. Add your Alchemy API key to the `blockchain/.env` file:
+   ```env
+   ALCHEMY_API_KEY=<your_alchemy_api_key>
+   PRIVATE_KEY=<your_private_key>
+   CHAIN_ID=1
+   ```
+
+2. Start Hardhat Node:
+   ```bash
+   npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/<your_alchemy_api_key>
+   ```
+
+---
 
 ## Usage
 
 ### 1. Start the Python Model
 ```bash
-cd python_model
+cd machine_learning
 python main.py
 ```
 
 ### 2. Deploy the Smart Contract
-1. Navigate to the `hardhat/` directory.
-2. Deploy the smart contract to the Goerli testnet:
+1. Navigate to the `blockchain/` directory.
+2. Deploy the smart contract:
    ```bash
-   npx hardhat run scripts/deploy.ts --network goerli
+   npx hardhat run scripts/deploy.ts --network localhost
    ```
-3. Copy the deployed contract address into the `.env` file in the `rust_backend/` directory.
+3. Copy the deployed contract address into the `CONTRACT_ADDRESS` field in the `rust_backend/.env` file.
 
 ### 3. Start the Rust Backend
 ```bash
@@ -134,25 +177,30 @@ Use the contract address and token ID to view the NFT on OpenSea:
 https://testnets.opensea.io/assets/goerli/<contract_address>/<token_id>
 ```
 
+---
+
 ## Project Structure
 
 ```
 nft-house-valuation-platform/
-├── python_model/            # Python house price prediction model
+├── machine_learning/        # Python house price prediction model
 │   ├── main.py              # Python API for predictions
 │   ├── utils.py             # Utility functions for ML
 ├── rust_backend/            # Rust backend
 │   ├── src/
 │   │   ├── main.rs          # Main Rust API
-│   ├── .env                 # Environment variables
-├── hardhat/                 # Hardhat project for smart contracts
+│   ├── .env.example         # Example environment variables
+├── blockchain/              # Hardhat project for smart contracts
 │   ├── contracts/
 │   │   ├── RealEstateNFT.sol  # ERC-721 smart contract
 │   ├── scripts/
 │   │   ├── deploy.ts        # Deployment script
 │   ├── hardhat.config.ts    # Hardhat configuration
+│   ├── .env.example         # Example environment variables
 ├── README.md                # Project documentation
 ```
+
+---
 
 ## Commands
 
@@ -179,8 +227,10 @@ nft-house-valuation-platform/
   ```
 - Deploy the contract:
   ```bash
-  npx hardhat run scripts/deploy.ts --network goerli
+  npx hardhat run scripts/deploy.ts --network localhost
   ```
+
+---
 
 ## Contributing
 
@@ -191,7 +241,8 @@ Contributions are welcome! Please:
 4. Push to the branch (`git push origin feature-name`).
 5. Open a pull request.
 
+---
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
