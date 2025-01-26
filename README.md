@@ -91,7 +91,7 @@ This project requires `.env` files for sensitive configurations in the `blockcha
 ### 3. Set Up the Python Model
 ```bash
 cd machine_learning
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 Place your pre-trained model (`house_price_model.keras`) and scaler (`scaler.save`) in the `machine_learning/` directory.
 
@@ -128,7 +128,7 @@ If you want to fork the Ethereum mainnet using Alchemy, follow these steps:
 ### 1. Start the Python Model
 ```bash
 cd machine_learning
-python main.py
+python3 main.py
 ```
 
 ### 2. Deploy the Smart Contract

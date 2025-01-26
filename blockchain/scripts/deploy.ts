@@ -1,22 +1,37 @@
 import { ethers } from "hardhat";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 async function main() {
-  console.log("Starting deployment...");
+  const name = process.env.NFT_NAME || "RealEstateNFT";
+  const symbol = process.env.NFT_SYMBOL || "HOUSE";
 
-  const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with the account:", deployer.address);
+  console.log(`Deploying RealEstateNFT with Name: ${name}, Symbol: ${symbol}`);
 
-  const RealEstateNFT = await ethers.getContractFactory("RealEstateNFT");
-  const contract = await RealEstateNFT.deploy({
-      maxFeePerGas: ethers.utils.parseUnits("50", "gwei"), // Ajusta según sea necesario
-      maxPriorityFeePerGas: ethers.utils.parseUnits("2", "gwei"), // Prioridad para el minero
-  });
+  try {
+    const RealEstateNFT = await ethers.getContractFactory("RealEstateNFT");
+    console.log("Contract factory initialized.");
 
-  await contract.deployed();
-  console.log("RealEstateNFT deployed to:", contract.address);
+    const realEstateNFT = await RealEstateNFT.deploy(name, symbol);
+    console.log("Deployment initiated.");
+
+    // Use the target directly if deployTransaction is undefined
+    if (realEstateNFT.address) {
+      console.log("Contract Address (direct):", realEstateNFT.address);
+    } else if (realEstateNFT.target) {
+      console.log("Contract Address (target):", realEstateNFT.target);
+    } else {
+      throw new Error("Failed to retrieve contract address.");
+    }
+  } catch (error) {
+    console.error("Error during deployment:", error.message);
+  }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Unhandled error:", error.message);
+    process.exit(1);
+  });
