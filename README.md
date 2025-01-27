@@ -4,6 +4,8 @@
 
 This project is currently under active development. Some features may not be fully implemented or are subject to change. Contributions and suggestions are welcome!
 
+## Intro
+
 This repository demonstrates how to create a decentralized platform for minting NFTs based on real estate data. It combines **machine learning** for house price prediction, a **Rust backend** for API handling, and a **smart contract** deployed on Ethereum for minting and managing NFTs.
 
 ## Table of Contents
@@ -91,7 +93,7 @@ This project requires `.env` files for sensitive configurations in the `blockcha
 ### 3. Set Up the Python Model
 ```bash
 cd machine_learning
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 Place your pre-trained model (`house_price_model.keras`) and scaler (`scaler.save`) in the `machine_learning/` directory.
 
@@ -128,7 +130,7 @@ If you want to fork the Ethereum mainnet using Alchemy, follow these steps:
 ### 1. Start the Python Model
 ```bash
 cd machine_learning
-python main.py
+python3 main.py
 ```
 
 ### 2. Deploy the Smart Contract
