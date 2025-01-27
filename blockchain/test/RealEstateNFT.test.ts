@@ -6,7 +6,7 @@ describe("RealEstateNFT", function () {
   let realEstateNFT: any;
   let owner: any, addr1: any;
 
-  beforeEach(async () => {
+  before(async () => {
     [owner, addr1] = await ethers.getSigners();
     RealEstateNFT = await ethers.getContractFactory("RealEstateNFT");
 
