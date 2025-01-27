@@ -1,6 +1,6 @@
 # NFT-House-Valuation-Decentralized-Platform
 
-## 🚧 Work in Progress (WIP) 🚧
+## ⚧ Work in Progress (WIP) ⚧
 
 This project is currently under active development. Some features may not be fully implemented or are subject to change. Contributions and suggestions are welcome!
 
@@ -16,6 +16,8 @@ This repository demonstrates how to create a decentralized platform for minting 
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Usage](#usage)
+  - [Mint an NFT](#4-mint-an-nft)
+  - [Get Metadata](#get-metadata)
 - [Project Structure](#project-structure)
 - [Commands](#commands)
 - [Contributing](#contributing)
@@ -182,6 +184,16 @@ Use the contract address and token ID to view the NFT on OpenSea:
 ```text
 https://testnets.opensea.io/assets/goerli/<contract_address>/<token_id>
 ```
+
+---
+
+## Get Metadata
+
+Retrieve metadata for a specific token by sending a GET request:
+```bash
+curl -X GET http://localhost:3000/get-metadata/<token_id>
+```
+Replace `<token_id>` with the ID of the token whose metadata you want to fetch.
 
 ---
 
