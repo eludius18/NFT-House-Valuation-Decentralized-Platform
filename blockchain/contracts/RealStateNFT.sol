@@ -86,6 +86,13 @@ contract RealEstateNFT is ERC721, Ownable {
         _tokenURIs[tokenId] = newTokenURI;
     }
 
+    /// @notice Alias para obtener el URI de metadatos de un NFT.
+    /// @param tokenId El ID del NFT.
+    /// @return El URI de metadatos asociado al NFT.
+    function getMetadata(uint256 tokenId) external view returns (string memory) {
+        return tokenURI(tokenId);
+    }
+
     /// @dev Internal function to check if a token exists.
     ///      Uses `_ownerOf` from the base ERC721 contract to determine existence.
     /// @param tokenId The ID of the NFT.

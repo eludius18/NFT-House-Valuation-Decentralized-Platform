@@ -112,4 +112,25 @@ describe("RealEstateNFT", function () {
       realEstateNFT.connect(addr1).mintNFT(addr1.address, tokenURI)
     ).to.be.reverted;
   });
+  
+  it("Should return the correct metadata when calling getMetadata", async function () {
+    const initialTokenURI = JSON.stringify({
+      name: "Luxury Villa",
+      description: "A beautiful villa with 4 bedrooms.",
+      attributes: [
+        { trait_type: "Bedrooms", value: 4 },
+        { trait_type: "Price", value: 500000 },
+      ],
+    });
+  
+    // Mint the NFT with initial metadata
+    await realEstateNFT.mintNFT(owner.address, initialTokenURI);
+  
+    // Fetch metadata using the getMetadata function
+    const metadataBeforeUpdate = await realEstateNFT.getMetadata(0);
+  
+    // Assert that the metadata is correct (initial metadata)
+    expect(metadataBeforeUpdate).to.equal(initialTokenURI);
+  });
+  
 });
