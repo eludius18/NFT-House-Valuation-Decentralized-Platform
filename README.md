@@ -238,6 +238,10 @@ nft-house-valuation-platform/
 
 ---
 
+## Screenshot
+
+![Screenshot](screenshot/screenshot.png)
+
 ## Contributing
 
 Contributions are welcome! Please:
